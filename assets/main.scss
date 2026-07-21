@@ -26,6 +26,25 @@ p {
   color: #111827;
 }
 
+.wrapper {
+  max-width: 960px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.site-header,
+.site-footer {
+  border: 0;
+  box-shadow: none;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+}
+
+.page-content {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
 .site-title,
 .site-title:visited,
 .site-nav .page-link,
@@ -63,8 +82,11 @@ a:hover {
 }
 
 .site-header {
-  border-top-color: #111827;
-  border-bottom-color: #e5e7eb;
+  border-bottom: 0;
+}
+
+.site-footer {
+  border-top: 0;
 }
 
 /* Add overrides here to change theme styles or site layout. */
@@ -120,7 +142,7 @@ a:hover {
   padding: 0.8rem 1rem;
   margin: 0 0 1rem;
   background: #f7f3ea;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 0;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 }
 
@@ -195,7 +217,7 @@ a:hover {
 .content {
   margin: 1.5rem auto 3rem;
   width: 100%;
-  max-width: 78ch;
+  max-width: 82ch;
 }
 
 .heading-scroll {

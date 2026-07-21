@@ -29,6 +29,12 @@ p {
   box-shadow: none;
 }
 
+.wrapper {
+  max-width: 960px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
 .site-title,
 .site-title:visited,
 .site-nav .page-link,
@@ -154,7 +160,8 @@ pre {
 
 .hr-bottom {
   background: #090a0f;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 0;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .hr-bottom .page-link {
