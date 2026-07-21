@@ -22,14 +22,20 @@ title: dsuyu
 email: damian.villarreal01@utrgv.edu
 description: >- # this means to ignore newlines until "baseurl:"
   
-baseurl: "" # leave empty for a site served at the domain root
-url: "https://damianvillarreal.com" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "" # production site is served at the domain root
+url: "https://damianvillarreal.com" # production hostname
 github_username:  dsuyu1
 
 # Build settings
 theme: minima
 plugins:
   - jekyll-feed
+
+defaults:
+  - scope:
+      type: posts
+    values:
+      permalink: /blog/:year/:month/:day/:title/
 
 # Exclude from processing.
 # The following items will not be processed, by default.
