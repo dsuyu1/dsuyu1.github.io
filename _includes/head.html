@@ -1,151 +1,29 @@
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="{{ '/assets/Waseda.webp' | relative_url }}" type="image/webp">
+
   {%- seo -%}
-  <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/assets/dark-theme.css' | relative_url }}" id="dark-theme-stylesheet" disabled>
-  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <style>
-    /* Small styling for the theme toggle when injected into the nav */
-    .theme-toggle {
-      cursor: pointer;
-      background: transparent;
-      border: none;
-      padding: 0;
-      color: inherit;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-    }
-    .theme-toggle:hover {
-      opacity: 0.9;
-    }
-    .theme-toggle:focus {
-      outline: none;
-      box-shadow: none;
-    }
-    .theme-toggle-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 1rem;
-      height: 1rem;
-    }
-    .theme-toggle-icon i,
-    .theme-toggle-icon svg {
-      width: 1rem;
-      height: 1rem;
-      display: inline-block;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-    }
-  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="icon" href="{{ '/assets/Waseda.webp' | relative_url }}" type="image/webp">
+
+  {%- feed_meta -%}
+
   <script>
-    (function() {
-      function applyThemePreference() {
-        var darkLink = document.getElementById('dark-theme-stylesheet');
-        var saved = null;
-        try { saved = localStorage.getItem('theme'); } catch (e) {}
-        if (saved === 'dark') {
-          darkLink.disabled = false;
-        } else if (saved === 'light') {
-          darkLink.disabled = true;
-        } else {
-          darkLink.disabled = !window.matchMedia('(prefers-color-scheme: dark)').matches;
-        }
-      }
-
-      function createNavItems() {
-        var nav = document.querySelector('.site-nav');
-        if (!nav) return;
-
-        // Insert Home link at the start (if not present)
-        var hasHome = nav.querySelector('a[href="{{ '/' | relative_url }}"]');
-        if (!hasHome) {
-          var home = document.createElement('a');
-          home.className = 'page-link';
-          home.href = '{{ '/' | relative_url }}';
-          home.textContent = 'Home';
-          var triggerBlock = nav.querySelector('.trigger');
-          if (triggerBlock) {
-            nav.insertBefore(home, triggerBlock);
-          } else {
-            nav.insertBefore(home, nav.firstChild);
-          }
-        }
-
-        // Insert theme toggle button
-        if (!nav.querySelector('#theme-toggle')) {
-          var toggle = document.createElement('a');
-          toggle.id = 'theme-toggle';
-          toggle.className = 'page-link theme-toggle';
-          toggle.href = '#';
-          toggle.setAttribute('role', 'button');
-          toggle.setAttribute('aria-label', 'Toggle color theme');
-          var icon = document.createElement('span');
-          icon.id = 'theme-toggle-icon';
-          icon.className = 'theme-toggle-icon';
-          toggle.appendChild(icon);
-          toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            var darkLink = document.getElementById('dark-theme-stylesheet');
-            var disabled = !darkLink.disabled;
-            darkLink.disabled = disabled;
-            try { localStorage.setItem('theme', darkLink.disabled ? 'light' : 'dark'); } catch (err) {}
-            updateToggleIcon();
-          });
-          nav.appendChild(toggle);
-        }
-        updateToggleIcon();
-      }
-
-      function updateToggleIcon() {
-        var darkLink = document.getElementById('dark-theme-stylesheet');
-        var icon = document.getElementById('theme-toggle-icon');
-        if (!icon || !darkLink) return;
-        var isDark = !darkLink.disabled;
-        icon.innerHTML = '';
-        var iconEl = document.createElement('i');
-        iconEl.setAttribute('data-lucide', isDark ? 'moon' : 'sun');
-        iconEl.setAttribute('aria-hidden', 'true');
-        icon.appendChild(iconEl);
-        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-          window.lucide.createIcons();
-        }
-      }
-
-      function initSectionNavigation() {
-        var nav = document.querySelector('.hr-bottom');
-        if (!nav) return;
-        var links = nav.querySelectorAll('a[href^="#section"]');
-        links.forEach(function(link) {
-          link.addEventListener('click', function(event) {
-            event.preventDefault();
-            var targetId = link.getAttribute('href').slice(1);
-            var target = document.getElementById(targetId);
-            if (!target) return;
-            var offset = 110;
-            var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-            window.scrollTo({ top: top, behavior: 'smooth' });
-            history.replaceState(null, '', '#' + targetId);
-          });
-        });
-      }
-
-      applyThemePreference();
-
-      document.addEventListener('DOMContentLoaded', function() {
-        createNavItems();
-        initSectionNavigation();
-      });
+    // Runs before first paint so a dark-mode visitor never sees a light flash.
+    // Both themes live in one stylesheet keyed off this attribute, so there is
+    // no second <link> to enable and no window where the wrong theme applies.
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem("theme"); } catch (e) {}
+      var dark = stored
+        ? stored === "dark"
+        : window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.dataset.theme = dark ? "dark" : "light";
     })();
   </script>
-  {%- feed_meta -%}
 </head>

@@ -4,12 +4,12 @@ source "https://rubygems.org"
 # GitHub Pages manages the supported Jekyll version via the `github-pages` gem.
 # To upgrade, run `bundle update github-pages`.
 # gem "jekyll", "~> 4.4.1"
-# This is the default theme for new Jekyll sites. You may change this to anything you like.
-gem "minima", "~> 2.5"
+# No theme gem — the layouts and includes in this repo are the whole theme.
 gem "github-pages", "~> 232", group: :jekyll_plugins
 # If you have any plugins, put them here!
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
+  gem "jekyll-seo-tag", "~> 2.8"
 end
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem

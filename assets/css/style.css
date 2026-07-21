@@ -1,0 +1,794 @@
+/* ==========================================================================
+   Tokens
+   Palette is the warm-paper scheme from the prod branch (#f7f3ea / #111827
+   light, #090a0f / #e2e8f0 dark), restructured as custom properties so both
+   themes live in one file instead of two stylesheets that must stay in sync.
+   The Jemi rose is the single accent.
+
+   Every colour below was measured against the surface it actually renders on
+   -- code colours against the code surface, not the page -- and clears 4.5:1
+   in both themes. See the comments where a value looks arbitrary; it usually
+   is not.
+   ========================================================================== */
+
+:root {
+  --brand: #e64a66;
+  /* Filled buttons carry white text, which needs 4.5:1. The raw rose only
+     reaches 3.79:1, so solid fills use a darkened step of the same hue. */
+  --brand-solid: #cf3552;
+  --brand-solid-hover: #b82c46;
+
+  --background: #f7f3ea;
+  --surface: #efe9db;
+  --foreground: #111827;
+  --muted-foreground: #6b6459;
+  --border: #e2dbc9;
+
+  /* Body links stay near-black so prose reads calm; the underline (not the
+     colour) is what marks them as links. Hover reveals the accent. */
+  --link: #111827;
+  --link-hover: #c02a46;
+  --ring: var(--brand);
+
+  --code-comment: #5f594f;
+  --code-keyword: #c02a46;
+  --code-string: #2f6b4d;
+  --code-number: #6b4a9e;
+  --code-function: #2f5f92;
+  --code-class: #7a5418;
+  --code-deleted: #a8323f;
+  --code-inserted: #2f6b4d;
+
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Inter rather than Helvetica Neue: Helvetica only exists on Apple devices,
+     so a Helvetica-first stack renders differently for most visitors. Inter is
+     the same grotesque genre and loads consistently everywhere. */
+  --font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+
+  --wrap: 60rem;    /* 960px, matching the widened layout */
+  --measure: 78ch;  /* drop to ~68ch if lines start to feel long */
+  --header-h: 4rem;
+}
+
+[data-theme="dark"] {
+  --background: #090a0f;
+  --surface: #1f2937;
+  --foreground: #e2e8f0;
+  --muted-foreground: #94a3b8;
+  --border: rgba(255, 255, 255, 0.1);
+
+  --link: #e2e8f0;
+  --link-hover: #f9a8b8;
+
+  --code-comment: #94a3b8;
+  --code-keyword: #f58ba0;
+  --code-string: #7fc9a0;
+  --code-number: #c0a3e8;
+  --code-function: #8ab6e8;
+  --code-class: #e0b06a;
+  --code-deleted: #f7a3ad;
+  --code-inserted: #8fe0ac;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.page-content {
+  flex: 1 0 auto;
+  padding-block: 2rem 4rem;
+}
+
+a {
+  color: var(--link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: var(--header-h);
+  flex-wrap: wrap;
+}
+
+.site-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.site-title:hover {
+  color: var(--foreground);
+  opacity: 0.7;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nav-link {
+  padding: 0.4rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: var(--foreground);
+  background: var(--surface);
+}
+
+.nav-link[aria-current="page"] {
+  color: var(--foreground);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  margin-left: 0.25rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--foreground);
+  background: var(--surface);
+}
+
+/* Icons are inline SVG rather than a CDN icon font: two glyphs are not worth
+   a blocking third-party request, and the toggle stays usable if it fails. */
+.theme-toggle svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.theme-toggle .icon-moon,
+[data-theme="dark"] .theme-toggle .icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+  display: block;
+}
+
+/* ==========================================================================
+   Home
+   ========================================================================== */
+
+.intro-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+/* Below ~48rem the fixed 240px image column squeezes the copy into a sliver,
+   so the row stacks and the image is capped rather than left to dominate. */
+@media (max-width: 48rem) {
+  .intro-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .intro-image {
+    order: -1;
+  }
+  .intro-image img {
+    max-width: 200px;
+  }
+}
+
+.intro-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  max-width: var(--measure);
+}
+
+.intro-copy h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+.intro-copy p {
+  margin: 0;
+}
+
+.intro-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.intro-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.35rem;
+  border-radius: 999px;
+  background: var(--brand-solid);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.button:hover {
+  background: var(--brand-solid-hover);
+  color: #fff;
+}
+
+.button-ghost {
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+.button-ghost:hover {
+  background: var(--surface);
+  color: var(--foreground);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+/* ==========================================================================
+   Post lists
+   ========================================================================== */
+
+.section-title {
+  max-width: var(--measure);
+  margin: 0 0 0.5rem;
+  font-size: 0.775rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.post-list {
+  max-width: var(--measure);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.post-list li {
+  border-bottom: 1px solid var(--border);
+}
+
+.post-list a {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  padding: 0.95rem 0.25rem;
+  margin-inline: -0.25rem;
+  border-radius: var(--radius-sm);
+  color: var(--foreground);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.post-list a:hover {
+  background: var(--surface);
+}
+
+.post-list a:hover .post-list-title {
+  text-decoration: underline;
+}
+
+.post-list-title {
+  font-weight: 500;
+}
+
+.post-list-date {
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.post-list-empty {
+  max-width: var(--measure);
+  padding: 1rem 0;
+  color: var(--muted-foreground);
+}
+
+.home-more {
+  max-width: var(--measure);
+  margin-top: 1.25rem;
+  font-size: 0.925rem;
+}
+
+/* ==========================================================================
+   Prose
+   ========================================================================== */
+
+.prose > *,
+.content > * {
+  max-width: var(--measure);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.content h2,
+.content h3 {
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  margin: 2.25rem 0 0.75rem;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.page-title {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  margin-bottom: 0.5rem;
+}
+
+.prose h2,
+.content h2 {
+  font-size: 1.4rem;
+}
+.prose h3,
+.content h3 {
+  font-size: 1.15rem;
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.content p {
+  margin: 0 0 1.15rem;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.35rem;
+}
+
+.prose li + li {
+  margin-top: 0.35rem;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding: 0.15rem 0 0.15rem 1.15rem;
+  border-left: 2px solid var(--border);
+  color: var(--muted-foreground);
+}
+
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Kramdown emits a bare <table> with no wrapper, so the scroll container has
+   to be the table itself -- otherwise a wide table scrolls the whole page. */
+.prose table {
+  display: block;
+  width: 100%;
+  max-width: var(--measure);
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.925rem;
+  margin: 1.5rem 0;
+}
+
+.prose th,
+.prose td {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.prose th {
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   In-post section navigation
+   ========================================================================== */
+
+.hr-bottom {
+  position: sticky;
+  /* Sits below the site header, which is also sticky at top: 0. */
+  top: var(--header-h);
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  padding: 0.6rem 0;
+  margin: 0 0 1.5rem;
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+}
+
+.hr-bottom a {
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.hr-bottom a:hover {
+  color: var(--foreground);
+  background: var(--surface);
+}
+
+/* Native anchor offset. This replaces the JS that intercepted every section
+   click to scroll manually -- `scroll-behavior: smooth` plus this margin does
+   the same job, and the two no longer disagree about the offset. */
+.heading-scroll,
+.content [id] {
+  scroll-margin-top: calc(var(--header-h) + 3.5rem);
+}
+
+.content {
+  margin: 0 auto 3rem;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Code
+   ========================================================================== */
+
+code,
+kbd,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+:not(pre) > code {
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--foreground);
+}
+
+pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.15rem;
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  line-height: 1.6;
+}
+
+pre code {
+  padding: 0;
+  background: none;
+}
+
+/* Rouge emits <div class="highlight"><pre class="highlight">. Reset only the
+   wrappers -- a bare `.highlight` here also matches the <pre> and strips the
+   surface off every code block. */
+div.highlight,
+figure.highlight {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.prose .highlighter-rouge,
+.prose figure.highlight {
+  max-width: var(--measure);
+  margin: 1.5rem 0;
+}
+
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cs {
+  color: var(--code-comment);
+  font-style: italic;
+}
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp,
+.highlight .kr, .highlight .kt, .highlight .kc {
+  color: var(--code-keyword);
+  font-weight: 500;
+}
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb,
+.highlight .sc, .highlight .sd, .highlight .se, .highlight .sh,
+.highlight .si, .highlight .sx, .highlight .sr {
+  color: var(--code-string);
+}
+.highlight .m, .highlight .mi, .highlight .mf, .highlight .mh, .highlight .il {
+  color: var(--code-number);
+}
+.highlight .nf, .highlight .nd { color: var(--code-function); }
+.highlight .nc, .highlight .nn { color: var(--code-class); }
+.highlight .o, .highlight .ow { color: var(--foreground); }
+.highlight .err { color: var(--code-keyword); }
+.highlight .gd { color: var(--code-deleted); }
+.highlight .gi { color: var(--code-inserted); }
+
+/* ==========================================================================
+   Post
+   ========================================================================== */
+
+.post-header {
+  margin-bottom: 2rem;
+}
+
+.post-meta {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.post-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  max-width: var(--measure);
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.post-nav a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  max-width: 15rem;
+  text-decoration: none;
+  color: var(--foreground);
+  font-weight: 500;
+  font-size: 0.925rem;
+}
+
+.post-nav a:hover {
+  text-decoration: underline;
+}
+
+.post-nav-next {
+  margin-left: auto;
+  text-align: right;
+}
+
+.post-nav-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.post-back {
+  max-width: var(--measure);
+  margin-top: 2rem;
+  font-size: 0.925rem;
+}
+
+/* ==========================================================================
+   404
+   ========================================================================== */
+
+.notfound {
+  max-width: var(--measure);
+  padding-block: 3rem;
+}
+
+.notfound-code {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 3rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--muted-foreground);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.site-footer {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  padding-block: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+}
+
+.footer-meta {
+  margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.15rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links a {
+  color: var(--muted-foreground);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Scrollbar
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+  background-clip: padding-box;
+}

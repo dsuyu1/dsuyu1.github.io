@@ -1,25 +1,18 @@
 ---
+layout: default
+title: Page not found
 permalink: /404.html
-layout: page
+sitemap: false
 ---
 
-<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
-
-<div class="container">
-  <h1>404</h1>
-
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
+<div class="wrap notfound">
+  <p class="notfound-code">404</p>
+  <h1 class="page-title">Page not found</h1>
+  <p style="color: var(--muted-foreground)">
+    That page doesn&rsquo;t exist, or it moved somewhere else.
+  </p>
+  <div class="hero-actions" style="margin-top:1.5rem">
+    <a class="button" href="{{ '/' | relative_url }}">Go home</a>
+    <a class="button button-ghost" href="{{ '/blog/' | relative_url }}">Browse the blog</a>
+  </div>
 </div>
