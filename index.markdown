@@ -1,14 +1,16 @@
 ---
 layout: page
-title: Home
 permalink: /
 ---
 
-<div class="hero">
-  <p class="eyebrow">Software, security, and notes from the web</p>
-  <h1>Welcome to my website.</h1>
-  <p>I’m Damian, a computer science student with a growing interest in cybersecurity, systems, and practical engineering.</p>
-  <p><a class="hero-link" href="/blog/">Read the blog</a></p>
+<div class="intro-row">
+  <div class="intro-copy">
+    <h4>I’m Damian, a computer science student with a growing interest in cybersecurity, cloud, and artificial intelligence.</h4>
+    <p><a class="hero-link" href="/blog/">Read the blog</a></p>
+  </div>
+  <div class="intro-image">
+    <img src="{{ '/assets/helvetica%20standard.svg' | relative_url }}" alt="Helvetica Standard logo" />
+  </div>
 </div>
 
 <div class="featured-posts">

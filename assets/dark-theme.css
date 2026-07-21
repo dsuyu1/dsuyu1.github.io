@@ -1,5 +1,5 @@
 body {
-  background-color: #0f172a;
+  background-color: #090a0f;
   color: #e2e8f0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.6;
@@ -18,55 +18,70 @@ p {
 .site-footer,
 .wrapper,
 .page-content {
-  background-color: #0f172a;
+  background-color: #090a0f;
   color: #e2e8f0;
 }
 
-.site-title, .site-title:visited,
+.site-header,
+.site-footer,
+.site-navigation {
+  border: none;
+  box-shadow: none;
+}
+
+.site-title,
+.site-title:visited,
 .site-nav .page-link,
 .post-link,
-a {
-  color: #93c5fd;
+a,
+a:visited {
+  color: #ffffff;
 }
 
 .site-nav .page-link:hover,
 .post-link:hover,
 .hero-link:hover,
 a:hover {
-  color: #f8fafc;
+  color: #ffffff;
 }
 
-.hero {
-  background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
-  border: 1px solid #334155;
-  border-radius: 16px;
-  padding: 2rem;
+.intro-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+  gap: 2rem;
+  align-items: center;
   margin-bottom: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.8rem;
-  color: #93c5fd;
-  margin-bottom: 0.6rem;
+.intro-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
 }
 
-.hero h1 {
-  margin-bottom: 0.6rem;
-  font-size: 2rem;
+.intro-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.hero p {
+.intro-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero p,
+.intro-copy p {
   line-height: 1.6;
   color: #e2e8f0;
 }
 
 .hero-link {
   display: inline-block;
-  background: #3b82f6;
-  color: white;
+  background: #4b5563;
+  color: #f8fafc;
   padding: 0.7rem 1rem;
   border-radius: 999px;
   text-decoration: none;
@@ -84,7 +99,7 @@ a:hover {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.85rem 0;
-  border-bottom: 1px solid #334155;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .featured-posts a {
