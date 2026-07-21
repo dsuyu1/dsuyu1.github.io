@@ -1,0 +1,7 @@
+---
+layout: post
+title:  "How to Implement an IAM Solution with Microsoft"
+date:   2026-07-21 06:55:19 +0000
+categories: sc-500 azure microsoft
+---
+

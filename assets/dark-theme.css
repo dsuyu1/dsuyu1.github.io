@@ -111,3 +111,19 @@ a:hover {
 .footer-col-wrapper {
   color: #94a3b8;
 }
+
+pre,
+code,
+.highlight,
+.highlighter-rouge .highlight,
+.highlight pre,
+.highlight code {
+  background-color: #1f2937 !important;
+  color: #f8fafc !important;
+  border: none !important;
+}
+
+pre {
+  padding: 1rem;
+  border-radius: 0.75rem;
+}
