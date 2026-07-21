@@ -5,7 +5,7 @@ permalink: /
 
 <div class="intro-row">
   <div class="intro-copy">
-    <h3>I’m Damian, a computer science student with a growing interest in cybersecurity, cloud, and artificial intelligence.</h3>
+    <h3>I’m a computer science student with an interest in cybersecurity, cloud, and artificial intelligence.</h3>
     <p><a class="hero-link" href="/blog/">Read the blog</a></p>
   </div>
   <div class="intro-image">
