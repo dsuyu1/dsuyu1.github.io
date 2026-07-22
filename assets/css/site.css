@@ -49,6 +49,11 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
     monospace;
 
+  /* Overwritten at runtime by theme.js, which measures the section bar's real
+     height (it grows when links wrap). Declared here so the value resolves
+     before the script runs; see the note near .heading-scroll. */
+  --section-nav-h: 3.5rem;
+
   --wrap: 60rem;    /* 960px, matching the widened layout */
   --measure: 78ch;  /* drop to ~68ch if lines start to feel long */
   --header-h: 4rem;
@@ -538,9 +543,18 @@ a:hover {
   z-index: 20;
   display: flex;
   flex-wrap: wrap;
+  /* Spread the links across the column so the bar adapts to however many
+     sections a post has, instead of clumping them at the left edge. */
+  justify-content: space-between;
   gap: 0.25rem 1rem;
   padding: 0.6rem 0;
-  margin: 0 0 1.5rem;
+  /* `.prose > *` caps children at --measure, but this bar has to be wider than
+     that: it needs to cover the full text column while it is stuck, or body
+     text scrolls through the gap beside it. The extra 1.2rem is one link's
+     horizontal padding on each side, and the matching negative margin pulls
+     the first and last labels back flush with the body text. */
+  max-width: calc(var(--measure) + 1.2rem);
+  margin: 0 -0.6rem 1.5rem;
   background: var(--background);
   border-bottom: 1px solid var(--border);
 }
@@ -562,14 +576,25 @@ a:hover {
 
 /* Native anchor offset. This replaces the JS that intercepted every section
    click to scroll manually -- `scroll-behavior: smooth` plus this margin does
-   the same job, and the two no longer disagree about the offset. */
+   the same job, and the two no longer disagree about the offset.
+
+   --section-nav-h is measured at runtime (see theme.js) because the bar grows
+   when its links wrap to a second row; a fixed offset sized for one row drops
+   the heading behind the bar on posts with more sections. The 3.5rem fallback
+   is the one-row height, used if the script does not run. */
 .heading-scroll,
 .content [id] {
-  scroll-margin-top: calc(var(--header-h) + 3.5rem);
+  scroll-margin-top: calc(
+    var(--header-h) + var(--section-nav-h, 3.5rem) + 0.5rem
+  );
 }
 
+/* Left-aligned rather than `0 auto`. Centring this block offset the body text
+   ~62px to the right of the post title and the section bar, which is what left
+   paragraphs hanging past the sticky bar's right edge as they scrolled under
+   it. Everything in the article now shares one left edge. */
 .content {
-  margin: 0 auto 3rem;
+  margin: 0 0 3rem;
   width: 100%;
 }
 

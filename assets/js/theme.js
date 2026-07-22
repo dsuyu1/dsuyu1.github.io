@@ -32,3 +32,38 @@
 
   sync();
 })();
+
+// The in-post section bar is sticky beneath the header, and it gets taller
+// when its links wrap onto a second row. Anchor offsets have to track that
+// real height: with the offset hardcoded for a single row, clicking a section
+// in a post with enough sections lands the heading behind the bar.
+(function () {
+  var bar = document.querySelector(".hr-bottom");
+  if (!bar) return;
+
+  function sync() {
+    document.documentElement.style.setProperty(
+      "--section-nav-h",
+      bar.offsetHeight + "px"
+    );
+  }
+
+  // A post's section count is fixed in the HTML, so this first call already
+  // has the right height. The rest cover the ways the bar can rewrap later.
+  sync();
+
+  // Resize is the case that actually rewraps the bar in a real browser.
+  window.addEventListener("resize", sync);
+
+  // Web fonts change the label widths, which can change the wrap point, and
+  // they usually land after this script runs.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(sync);
+  }
+
+  // Belt and braces for anything else that reflows the bar. Not relied on as
+  // the only trigger: some embedded browsers never deliver these callbacks.
+  if (window.ResizeObserver) {
+    new ResizeObserver(sync).observe(bar);
+  }
+})();

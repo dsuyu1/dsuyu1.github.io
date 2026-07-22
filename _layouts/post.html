@@ -12,7 +12,37 @@ layout: default
     </p>
   </header>
 
-  {{ content }}
+  {%- comment -%}
+    Section bar, built from the post's own <h2>s so a post body stays pure
+    markdown. Kramdown's auto_ids gives every heading an id, so writing
+    `## Introduction` is all it takes to add an entry here -- there is no
+    second list to keep in sync.
+
+    Only rendered when a post has more than one section; a bar with a single
+    link is noise. <h3> and below are deliberately ignored, so a post can use
+    subheadings without cluttering the bar.
+  {%- endcomment -%}
+  {%- assign chunks = content | split: '<h2 id="' -%}
+  {%- if chunks.size > 2 -%}
+    <nav class="hr-bottom" aria-label="Sections">
+      {%- for chunk in chunks offset: 1 -%}
+        {%- assign anchor = chunk | split: '"' | first -%}
+        {%- assign label = chunk | split: '</h2>' | first | split: '">' | last | strip_html | strip -%}
+        <a href="#{{ anchor }}">{{ label }}</a>
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
+
+  {%- comment -%}
+    The wrapper lives here rather than in each post. Kramdown does not parse
+    markdown inside block-level HTML, so a `<div>` opened in a post body turns
+    the rest of that post into raw HTML -- which is why posts used to be
+    written in <p> tags. Wrapping the already-rendered content here keeps the
+    styling hooks without costing the post its markdown.
+  {%- endcomment -%}
+  <div class="content">
+    {{ content }}
+  </div>
 
   <nav class="post-nav" aria-label="Post navigation">
     {%- if page.previous -%}

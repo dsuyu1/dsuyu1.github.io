@@ -8,7 +8,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  {%- comment -%}
+    site.css, not style.css. The github-pages gem defaults `theme` to
+    jekyll-theme-primer even with no `theme:` key in _config.yml, and that
+    theme ships assets/css/style.scss -- which compiles to the same output
+    path a file named assets/css/style.css would occupy. Sharing the path
+    meant a full build wrote ours last, but every --watch regeneration
+    re-rendered the theme's SCSS over it without re-copying our static file,
+    so the CSS vanished on the first refresh after any edit. Owning a
+    filename the theme does not use avoids the collision entirely.
+  {%- endcomment -%}
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
   <link rel="icon" href="{{ '/assets/Waseda.webp' | relative_url }}" type="image/webp">
 
   {%- feed_meta -%}
