@@ -5,7 +5,7 @@ permalink: /about/
 description: About Damian Villarreal — computer science student.
 ---
 
-I&rsquo;m Damian Villarreal, a computer science student at the University of
+I'm Damian Villarreal, a computer science student at the University of
 Texas Rio Grande Valley, interested in cybersecurity, cloud, and artificial
 intelligence.
 
@@ -15,18 +15,39 @@ intelligence.
      visitors actually want, and it's the only section that can't be guessed
      from the rest of the site. -->
 
-Right now I&rsquo;m working through Azure security and identity, and building
-things end to end rather than stopping at the tutorial.
+## What I'm working on
+Right now, I'm building projects and studying for the following certifications that I am scheduled to sit in for:
+- SC-500: Implementing End-to-End Security Controls for Cloud and AI Workloads (beta) (August 6)
+- SC-300: Microsoft Identity and Access Administrator (August 12)
+- SAP-C02: AWS Certified Solutions Architect - Professional (August 27)
 
 ## What I write about
 
-- Security — what I&rsquo;m learning, tools I&rsquo;m picking apart, writeups
-- Cloud and identity, mostly on Azure
-- Notes on projects I&rsquo;m building
+- Security 
+- Cloud, mostly AWS and Azure
+- Artificial intelligence
+- News I find interesting
+- Things I find useful to share
+- Notes on projects I'm building
 
 <!-- TODO: Add a "Projects" or "Now" section here once you have a couple of
      things worth linking. A short list with one line each beats a long
      paragraph. -->
+
+
+## Certifications
+I've earned the following certifications:
+- CompTIA CySA+
+- CompTIA Security+
+- CompTIA Network+
+- CompTIA SecAI+
+- AWS Certified AI Practitioner
+- AWS Certified Solutions Architect – Associate
+- Certified in Cybersecurity (CC)
+
+## Awards
+Benjamin A. Gilman International Scholarship
+- I studied abroad in South Korea! 안녕!
 
 ## Elsewhere
 
