@@ -21,6 +21,11 @@ Right now, I'm building projects and studying for the following certifications t
 - SC-300: Microsoft Identity and Access Administrator (August 12)
 - SAP-C02: AWS Certified Solutions Architect - Professional (August 27)
 
+### My non-profit
+I run a non-profit organization called the **Vaquero Information Security Initiative**! We started as a student organization, and we've grown into an official 501(c)(3) non-profit. We help students build practical skills, experience, make connections, and give back to our local communities.
+
+[Get in touch.](https://vaqueroisi.org/)
+
 ## What I write about
 
 - Security 
@@ -53,3 +58,5 @@ Benjamin A. Gilman International Scholarship
 
 - [GitHub](https://github.com/{{ site.github_username }})
 - [Email](mailto:{{ site.email }})
+
+![nichijou.svg](assets/nichijou.svg)
