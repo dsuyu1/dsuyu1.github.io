@@ -26,12 +26,7 @@ description: >-
   {%- if site.posts.size > 0 -%}
     <ul class="post-list">
       {%- for post in site.posts limit: 5 -%}
-        <li>
-          <a href="{{ post.url | relative_url }}">
-            <span class="post-list-title">{{ post.title }}</span>
-            <span class="post-list-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-          </a>
-        </li>
+        {%- include post-list-item.html post=post -%}
       {%- endfor -%}
     </ul>
     {%- if site.posts.size > 5 -%}

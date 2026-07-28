@@ -386,13 +386,15 @@ a:hover {
   border-bottom: 1px solid var(--border);
 }
 
+/* A row is `.post-list-thumb` (optional) + `.post-list-body`. The thumb sits
+   at a fixed size regardless of the image's own aspect ratio, so posts with
+   and without one line up in the same list without the row height jumping
+   around. */
 .post-list a {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.35rem 1rem;
-  padding: 0.95rem 0.25rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 0.25rem;
   margin-inline: -0.25rem;
   border-radius: var(--radius-sm);
   color: var(--foreground);
@@ -408,6 +410,38 @@ a:hover {
   text-decoration: underline;
 }
 
+.post-list-thumb {
+  flex: 0 0 auto;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.post-list-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-list-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.post-list-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+}
+
 .post-list-title {
   font-weight: 500;
 }
@@ -417,6 +451,31 @@ a:hover {
   color: var(--muted-foreground);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+/* ==========================================================================
+   Tags
+   ========================================================================== */
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.post-tags {
+  margin: 0.6rem 0 0;
 }
 
 .post-list-empty {
@@ -543,18 +602,19 @@ a:hover {
   z-index: 20;
   display: flex;
   flex-wrap: wrap;
-  /* Spread the links across the column so the bar adapts to however many
-     sections a post has, instead of clumping them at the left edge. */
-  justify-content: space-between;
+  /* No `max-width` of its own: it inherits the --measure cap from
+     `.prose > *`, so the bar's box lines up edge-to-edge with the post title
+     and body text rather than spanning wider or narrower than the column it
+     sits in.
+
+     The links are then centered *within* that column-width box. Body text and
+     headings stay left-aligned; only these labels center. `flex-wrap` still
+     lets extra sections wrap to a second row rather than overflow, and each
+     row centers independently. */
+  justify-content: center;
   gap: 0.25rem 1rem;
   padding: 0.6rem 0;
-  /* `.prose > *` caps children at --measure, but this bar has to be wider than
-     that: it needs to cover the full text column while it is stuck, or body
-     text scrolls through the gap beside it. The extra 1.2rem is one link's
-     horizontal padding on each side, and the matching negative margin pulls
-     the first and last labels back flush with the body text. */
-  max-width: calc(var(--measure) + 1.2rem);
-  margin: 0 -0.6rem 1.5rem;
+  margin: 0 0 1.5rem;
   background: var(--background);
   border-bottom: 1px solid var(--border);
 }
@@ -684,6 +744,22 @@ figure.highlight {
   margin: 0;
   font-size: 0.875rem;
   color: var(--muted-foreground);
+}
+
+.post-banner {
+  max-width: var(--measure);
+  margin: 0 0 2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.post-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 22rem;
+  object-fit: cover;
 }
 
 .post-nav {

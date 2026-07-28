@@ -10,7 +10,27 @@ layout: default
         {{ page.date | date: "%B %-d, %Y" }}
       </time>
     </p>
+    {%- if page.tags.size > 0 -%}
+      <p class="tag-list post-tags">
+        {%- for tag in page.tags -%}<span class="tag">{{ tag }}</span>{%- endfor -%}
+      </p>
+    {%- endif -%}
   </header>
+
+  {%- comment -%}
+    `image:` doubles as the post's og:image / twitter:image -- jekyll-seo-tag
+    reads the same front matter key, so setting it once covers both the
+    on-page banner and the link-preview image with nothing extra to keep in
+    sync. Accepts either the plain-string form or jekyll-seo-tag's
+    {path, alt} object form.
+  {%- endcomment -%}
+  {%- if page.image -%}
+    {%- assign banner_src = page.image.path | default: page.image -%}
+    <div class="post-banner">
+      <img src="{{ banner_src | relative_url }}"
+           alt="{{ page.image.alt | default: page.title }}">
+    </div>
+  {%- endif -%}
 
   {%- comment -%}
     Section bar, built from the post's own <h2>s so a post body stays pure

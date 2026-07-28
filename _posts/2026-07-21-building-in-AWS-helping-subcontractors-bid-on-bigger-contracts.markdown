@@ -2,9 +2,10 @@
 layout: post
 title:  "Building in AWS: Helping Subcontractors Bid on Bigger Contracts"
 date:   2026-07-22 01:09:00 +0000
-categories: [aws]
+tags: [ongoing, project, aws, architecture]
+image: assets/subcontractors.jpg
 ---
-
+ 
 ## Introduction
 
 Construction in the Rio Grande Valley (RGV) is becoming a bigger and bigger market to keep our eyes on, whether you're looking to pivot into a profitable market, looking for employment, or finding leads for your business. As an RGV native, it's hard not to notice the construction happening left and right as our once-small community rushes to modernize and take advantage of our unique geo locality.

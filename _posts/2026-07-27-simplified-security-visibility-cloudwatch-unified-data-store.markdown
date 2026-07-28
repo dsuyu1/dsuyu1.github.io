@@ -2,7 +2,8 @@
 layout: post
 title:  "Simplified Security Visibility: CloudWatch Unified Data Store"
 date:   2026-07-27 00:00:00 +0000
-categories: [aws]
+tags: [notes, workshop, cybersecurity, aws, cloudwatch, cloudtrail]
+image: assets\cloudwatch-thumbnail.png
 ---
 
 ## Overview
@@ -25,7 +26,7 @@ For AWS CloudTrail specifically, the rule can also carry **advanced event select
 #### Cloudtrail telemetry rules
 Cloudtrail captures the _identity_ view of activity: who called which API, from where, with what result. 
 
-![1.png](../assets/1.png)
+![1.png](/assets/1.png)
 
 From the screenshot, we can see that the **Data source** is AWS CloudTrail, the **Destination** is CloudWatch Logs, managed log group pattern `aws/cloudtrail/[event-type]`, and the event types are both Management events and Data events.
 - **Management events**: all account-wide API activity. Think of them as the control plane. Management events detail who opened the metaphorical door.
@@ -39,7 +40,7 @@ Data event are high-volume, so the rule uses **advanced event selectors** to cap
    - **Field**: readOnly **Equals** `false`
    - **Field**: resources.ARN **startsWith** `arn:aws:s3:::workshop-data-${AccountID-${Region}` 
 
-![2.png](../assets/2.png)
+![2.png](/assets/2.png)
 
 #### The technique to take home
 The `readOnly = false + resources.ARN startsWith` combination is the pattern to remember: log only write operations on a specific bucket, cutting data-event volume while guaranteeing delivery for the mutations that matter most. This is how you'd scope CloudTrail data events in production.
@@ -47,7 +48,7 @@ The `readOnly = false + resources.ARN startsWith` combination is the pattern to 
 #### Reviewing S3 server access log telemetry rule
 S3 servr access logs are the complementary source. They add the _HTTP-level_ view of every bucket request (TLS version, bytes transferred, signature version) that Cloudtrail **does not record**. 
 
-![3.png](../assets/3.png)
+![3.png](/assets/3.png)
 
 We can see from the image that the enablement rule takes the same shape as the CloudTrail rule.
 
@@ -59,7 +60,7 @@ One of the most common processors is the OCSF processor, which normalizes logs i
 #### Why normalize?
 Why normalize to OCSF? Native AWS log formats are service-specific. OCSF gives you consistent field names and structures across security tools and platforms, which helps multi-vendor SOCs and SIEMs and lets you correlate multiple AWS log sources in one query. 
 
-![4.png](../assets/4.png)
+![4.png](/assets/4.png)
 
 Here's the pipeline's definition as code:
 
@@ -113,7 +114,7 @@ One important concept to understand is that the processors have an order to them
 ### AI-powered query generation and summarization
 CloudWatch Logs Insights supports a natural language query capability to help you generate and update queries for CloudWatch Logs Insights QL, OpenSearch SQL, and OpenSearch PPL. You can use plain English prompts to automatically generate queries without learning complex syntax. Below, I've asked the AI to "Find all AccessDenied errors in the last 24 hours grouped by user". 
 
-![5.png](../assets/5.png)
+![5.png](/assets/5.png)
 
 Once you've run your query, you can again ask the AI to summarize the data. Here's the AI summary:
 
@@ -127,7 +128,7 @@ CloudWatch Logs Insights supports three query languages so you can use whichever
 ### Interactive log exploration with facets
 CloudWatch Logs Insights facets enable interactive log analysis by allowing you to filter query results through point-and-click selection. 
 
-![6.png](../assets/6.png)
+![6.png](/assets/6.png)
 
 To learn more about facets, correlation, enrichment, automation in CloudWatch Log Analytics, go to [this Amazon blog post](https://aws.amazon.com/blogs/mt/log-analysis-with-facets-correlation-enrichment-and-automation-in-amazon-cloudwatch-log-analytics/).
 

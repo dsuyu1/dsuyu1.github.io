@@ -1,0 +1,31 @@
+{%- comment -%}
+  One post row for the home and blog list pages. Both used to carry their own
+  copy of this markup; a single include means adding thumbnail/tag support
+  only had to happen once, and the two lists can't drift out of sync the way
+  the post/nav markup did before.
+
+  Usage: {%- include post-list-item.html post=post -%}
+{%- endcomment -%}
+{%- assign post = include.post -%}
+<li>
+  <a href="{{ post.url | relative_url }}">
+    {%- if post.image -%}
+      {%- assign thumb_src = post.image.path | default: post.image -%}
+      <span class="post-list-thumb">
+        <img src="{{ thumb_src | relative_url }}"
+             alt="" loading="lazy" width="96" height="96">
+      </span>
+    {%- endif -%}
+    <span class="post-list-body">
+      <span class="post-list-top">
+        <span class="post-list-title">{{ post.title }}</span>
+        <span class="post-list-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+      </span>
+      {%- if post.tags.size > 0 -%}
+        <span class="tag-list">
+          {%- for tag in post.tags -%}<span class="tag">{{ tag }}</span>{%- endfor -%}
+        </span>
+      {%- endif -%}
+    </span>
+  </a>
+</li>

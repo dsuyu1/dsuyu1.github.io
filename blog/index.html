@@ -14,12 +14,7 @@ description: Posts on software, security, and systems.
   {%- if site.posts.size > 0 -%}
     <ul class="post-list">
       {%- for post in site.posts -%}
-        <li>
-          <a href="{{ post.url | relative_url }}">
-            <span class="post-list-title">{{ post.title }}</span>
-            <span class="post-list-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-          </a>
-        </li>
+        {%- include post-list-item.html post=post -%}
       {%- endfor -%}
     </ul>
   {%- else -%}

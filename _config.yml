@@ -28,6 +28,23 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
+# Post visibility
+# ---------------
+# Add `published: false` to a post's front matter to take it offline. Jekyll
+# skips the document entirely: no page is built, so the URL 404s, and it is
+# absent from the home list, the blog index, the feed, and prev/next links.
+# Omit the key (or set `published: true`) to publish. Verified end to end.
+#
+# Do NOT use `draft:` for this. jekyll-feed already reads that key --
+# `post.draft != true` in its own template -- so `draft: true` silently drops
+# a post from the RSS feed while leaving it visible everywhere else.
+#
+# To preview hidden posts locally:
+#   bundle exec jekyll serve --unpublished
+#
+# Note: `future: false` is Jekyll's default, so a post dated ahead of today is
+# also withheld -- that is a separate mechanism from `published`.
+
 defaults:
   - scope:
       type: posts
