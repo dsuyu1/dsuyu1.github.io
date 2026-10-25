@@ -2,10 +2,10 @@
 layout: page
 title: Research
 permalink: /research/
-description: Damian Villarreal's research on network detection and response.
+description: Damian Villarreal's research on machine learning for security: federated learning and network detection.
 ---
 
-I work on network detection and response (NDR) research at UTRGV.
+I work on machine learning for security at UTRGV, with a focus on federated learning and network detection.
 
 ## Benign-behavior transfer in federated network detection
 Organizations want to train network anomaly detectors together without handing
@@ -35,3 +35,19 @@ data first.
 
 - Course research project, CSCI 6379
 - Tested on sealed CTU-13 scenarios under rules fixed before scoring
+
+## Federated pre-training for security-assistant LLMs (FeDAPT)
+Can a group of security organizations train a better security-assistant LLM
+together without any of them sharing private telemetry? FeDAPT splits the
+problem. The shared part is public security prose (ATT&CK, CVEs, Sigma rules),
+which organizations federate into a shared adapter. Each org's raw logs stay
+local and are used only for a second, local tuning stage.
+
+The payoff of joining the federation is a single number: the gap between
+federated adaptation and each org going it alone. The system is built and
+tested, the data layer is validated on real public logs, and the experiment is
+staged for an HPC cluster. The full training run is the next step, so there is
+no headline result yet.
+
+- Summer 2026 graduate research assistant work
+- Code: [github.com/dsuyu1/fedapt](https://github.com/dsuyu1/fedapt)
