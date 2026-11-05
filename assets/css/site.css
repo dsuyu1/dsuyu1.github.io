@@ -275,16 +275,11 @@ a:hover {
   padding-block: 2rem;
 }
 
-.home-links {
-  justify-content: center;
-}
-
 .intro-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
   gap: 2rem;
   align-items: center;
-  margin-bottom: 2.5rem;
 }
 
 /* Below ~48rem the fixed 240px image column squeezes the copy into a sliver,

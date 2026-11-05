@@ -21,9 +21,4 @@ description: >-
            alt="Helvetica Standard logo" width="320" height="320">
     </div>
   </div>
-
-  <div class="hero-actions home-links">
-    <a class="button button-ghost" href="{{ '/portfolio/' | relative_url }}">Portfolio</a>
-    <a class="button button-ghost" href="{{ '/research/' | relative_url }}">Research</a>
-  </div>
 </div>
