@@ -269,6 +269,16 @@ a:hover {
    Home
    ========================================================================== */
 
+.home-content {
+  display: grid;
+  align-items: center;
+  padding-block: 2rem;
+}
+
+.home-links {
+  justify-content: center;
+}
+
 .intro-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
